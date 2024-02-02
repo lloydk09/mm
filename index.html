@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Downloader</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-nZPlTG/izRBb8BhGZdtAM4jNH4A9Ew1j/Qw1vRg6DkHWbKz/2pK0z2r3F1Hz0oJMoK2lwFcrYVsRGXwhGY9EhA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <header>
+        <!-- Use semantic HTML for icons -->
+        <i class="fab fa-youtube"></i>
+        <i class="fab fa-tiktok"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <ul>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+        </ul>
+    </header>
+
+    <section>
+        <h1>Media Downloader</h1>
+        <div class="link-container">
+            <label for="link">Video Link</label>
+            <!-- Add autocomplete attribute for better usability -->
+            <input type="text" class="link" id="link" name="link" placeholder="Enter Video Link" autocomplete="off" required>
+        </div>
+        <div class="format-container">
+            <label for="format">Format</label>
+            <select class="format" id="format" required>
+                <option selected disabled>Select Video Format</option>
+                <option value="mp3">Mp3</option>
+                <option value="mp4">Mp4</option>
+            </select>
+        </div>
+        <div class="button-container">
+            <!-- Use button type="button" to prevent form submission -->
+            <button class="btn" type="button">Download</button>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function() {
+            $(".btn").click(function() {
+                var link = $(".link").val();
+                var format = $(".format").val();
+                if (!format) {
+                    alert("Please select a video format.");
+                    return;
+                }
+                download(link, format);
+            });
+
+            function download(link, format) {
+                var baseUrl;
+                // Check if the link contains keywords for different social media platforms
+                if (link.includes("youtube") || link.includes("youtu.be")) {
+                    baseUrl = "https://youtube-download.com/api/download?video=";
+                } else if (link.includes("tiktok.com") || link.includes("tiktokcdn.com")) {
+                    baseUrl = "https://tiktok-download.com/api/download?video=";
+                } else if (link.includes("twitter")) {
+                    baseUrl = "https://twitter-download.com/api/download?video=";
+                } else if (link.includes("facebook")) {
+                    baseUrl = "https://facebook-download.com/api/download?video=";
+                } else if (link.includes("instagram")) {
+                    baseUrl = "https://instagram-download.com/api/download?video=";
+                } else {
+                    alert("Unsupported video source. Please provide a valid link.");
+                    return;
+                }
+                // Construct the full URL with the selected format
+                var fullUrl = baseUrl + encodeURIComponent(link) + '&format=' + format;
+                // Open the download link in a new tab
+                window.open(fullUrl, '_blank');
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
